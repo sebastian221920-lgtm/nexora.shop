@@ -1,682 +1,180 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NEXORA | Producto Viral</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+<!-- PEGA ESTO JUSTO ANTES DE </body> -->
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:'Montserrat',sans-serif;
-background:#ffffff;
-color:#111;
-overflow-x:hidden;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-:root{
---primary:#000;
---accent:#ff4d4d;
---green:#14b86e;
---light:#f7f7f7;
---gray:#666;
---border:#e8e8e8;
-}
-
-.topbar{
-background:#000;
-color:#fff;
-text-align:center;
-padding:10px;
-font-size:12px;
-font-weight:600;
-letter-spacing:1px;
-}
-
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 6%;
-border-bottom:1px solid #eee;
-background:#fff;
-position:sticky;
-top:0;
-z-index:999;
-}
-
-.logo{
-font-size:28px;
-font-weight:800;
-letter-spacing:2px;
-}
-
-.nav-btn{
-background:#000;
-color:#fff;
-padding:12px 18px;
-border:none;
-font-weight:700;
-cursor:pointer;
-border-radius:8px;
-}
-
-.container{
-max-width:1400px;
-margin:auto;
-padding:40px 6%;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:start;
-}
-
-.gallery{
-position:sticky;
-top:100px;
-}
-
-.main-image{
-width:100%;
-aspect-ratio:1/1;
-background:#f3f3f3;
-border-radius:20px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:130px;
-position:relative;
-overflow:hidden;
-}
-
-.badge{
-position:absolute;
-top:20px;
-left:20px;
-background:var(--accent);
-color:#fff;
-padding:10px 16px;
-border-radius:50px;
-font-size:12px;
-font-weight:700;
-}
-
-.thumbs{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-margin-top:15px;
-}
-
-.thumb{
-background:#f5f5f5;
-aspect-ratio:1/1;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:35px;
-cursor:pointer;
-border:2px solid transparent;
-transition:.2s;
-}
-
-.thumb:hover{
-border-color:#000;
-}
-
-.info h1{
-font-size:48px;
-line-height:1.1;
-font-weight:800;
-margin-bottom:20px;
-}
-
-.rating{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:20px;
-font-size:15px;
-}
-
-.stars{
-color:#ffb400;
-font-size:18px;
-}
-
-.price-box{
-display:flex;
-align-items:center;
-gap:15px;
-margin:25px 0;
-flex-wrap:wrap;
-}
-
-.price{
-font-size:48px;
-font-weight:800;
-}
-
-.old-price{
-font-size:24px;
-text-decoration:line-through;
-color:#888;
-}
-
-.discount{
-background:#ffeded;
-color:#ff0000;
-padding:8px 14px;
-border-radius:50px;
-font-weight:700;
-font-size:13px;
-}
-
-.stock{
-background:#f3fff8;
-padding:16px;
-border-radius:12px;
-margin-bottom:20px;
-font-weight:600;
-color:#14b86e;
-border:1px solid #d8f7e8;
-}
-
-.benefits{
-display:flex;
-flex-direction:column;
-gap:12px;
-margin:25px 0;
-}
-
-.benefit{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:15px;
-font-weight:500;
-}
-
-.colors{
-display:flex;
-gap:12px;
-margin:15px 0 30px;
-}
-
-.color{
-width:38px;
-height:38px;
-border-radius:50%;
-cursor:pointer;
-border:3px solid #fff;
-box-shadow:0 0 0 1px #ccc;
-}
-
-.cta{
-display:flex;
-flex-direction:column;
-gap:15px;
-margin-top:30px;
-}
-
-.buy-btn{
-background:#000;
-color:#fff;
-padding:20px;
-border:none;
-font-size:18px;
-font-weight:800;
-border-radius:14px;
-cursor:pointer;
-transition:.3s;
-}
-
-.buy-btn:hover{
-background:#222;
-transform:translateY(-2px);
-}
-
-.cart-btn{
-background:#fff;
-color:#000;
-padding:18px;
-border:2px solid #000;
-font-size:16px;
-font-weight:700;
-border-radius:14px;
-cursor:pointer;
-}
-
-.payment{
-margin-top:25px;
-padding-top:25px;
-border-top:1px solid #eee;
-}
-
-.payment h4{
-margin-bottom:15px;
-font-size:13px;
-letter-spacing:1px;
-color:#777;
-}
-
-.payments{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.pay{
-padding:10px 14px;
-background:#f5f5f5;
-border-radius:8px;
-font-size:13px;
-font-weight:700;
-}
-
-.description{
-max-width:1200px;
-margin:auto;
-padding:80px 6%;
-}
-
-.description h2{
-font-size:42px;
-margin-bottom:25px;
-}
-
-.description p{
-font-size:18px;
-line-height:1.9;
-color:#444;
-margin-bottom:20px;
-}
-
-.features{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:25px;
-margin-top:50px;
-}
-
-.feature{
-background:#f8f8f8;
-padding:30px;
-border-radius:18px;
-text-align:center;
-}
-
-.feature-icon{
-font-size:42px;
-margin-bottom:15px;
-}
-
-.feature h3{
-margin-bottom:10px;
-font-size:20px;
-}
-
-.reviews{
-background:#fafafa;
-padding:80px 6%;
-}
-
-.reviews h2{
-text-align:center;
-font-size:42px;
-margin-bottom:50px;
-}
-
-.review-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:25px;
-max-width:1300px;
-margin:auto;
-}
-
-.review{
-background:#fff;
-padding:30px;
-border-radius:18px;
-box-shadow:0 5px 20px rgba(0,0,0,.05);
-}
-
-.review-top{
-display:flex;
-justify-content:space-between;
-margin-bottom:15px;
-}
-
-.review-name{
-font-weight:700;
-}
-
-.review-text{
-line-height:1.7;
-color:#555;
-font-size:15px;
-}
-
-.sticky-buy{
+.editor-toggle{
 position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:#fff;
-padding:15px;
-box-shadow:0 -5px 20px rgba(0,0,0,.1);
-display:none;
-z-index:9999;
-}
-
-.sticky-buy button{
-width:100%;
+bottom:100px;
+right:20px;
+z-index:99999;
 background:#000;
 color:#fff;
-padding:18px;
 border:none;
-font-size:16px;
-font-weight:800;
-border-radius:12px;
+padding:16px 18px;
+border-radius:50px;
+font-weight:700;
+font-size:14px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+cursor:pointer;
 }
-
-footer{
+.editor-panel{
+position:fixed;
+top:0;
+right:-100%;
+width:100%;
+max-width:420px;
+height:100vh;
+background:#fff;
+z-index:999999;
+overflow:auto;
+padding:25px;
+transition:.4s ease;
+box-shadow:-10px 0 40px rgba(0,0,0,.15);
+}
+.editor-panel.active{
+right:0;
+}
+.editor-panel h2{
+font-size:24px;
+margin-bottom:20px;
+}
+.editor-panel label{
+display:block;
+font-size:13px;
+font-weight:700;
+margin-top:18px;
+margin-bottom:8px;
+}
+.editor-panel input,
+.editor-panel textarea{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:12px;
+font-family:inherit;
+font-size:14px;
+}
+.editor-panel textarea{
+min-height:120px;
+resize:none;
+}
+.editor-panel button{
+width:100%;
+margin-top:20px;
+padding:16px;
+border:none;
+border-radius:14px;
+font-weight:700;
+cursor:pointer;
+font-size:15px;
+}
+.save-btn{
 background:#000;
 color:#fff;
-padding:50px 6%;
-text-align:center;
-margin-top:80px;
 }
-
-@media(max-width:900px){
-
-.container{
-grid-template-columns:1fr;
-gap:40px;
+.close-btn{
+background:#f5f5f5;
+color:#111;
 }
-
-.gallery{
-position:relative;
-top:0;
-}
-
-.info h1{
-font-size:34px;
-}
-
-.price{
-font-size:38px;
-}
-
-.features{
-grid-template-columns:1fr;
-}
-
-.review-grid{
-grid-template-columns:1fr;
-}
-
-.sticky-buy{
-display:block;
-}
-
-body{
-padding-bottom:90px;
-}
-
-}
-
 </style>
-</head>
-
-<body>
-
-<div class="topbar">
-🚚 ENVÍO GRATIS + PAGO CONTRA ENTREGA EN LATINOAMÉRICA
-</div>
-
-<nav>
-<div class="logo">NEXORA</div>
-<button class="nav-btn">🛒 Comprar</button>
-</nav>
-
-<section class="container">
-
-<div class="gallery">
-
-<div class="main-image" id="mainImage">
-<div class="badge">🔥 MÁS VENDIDO</div>
-📦
-</div>
-
-<div class="thumbs">
-
-<div class="thumb" onclick="changeImage('📦')">📦</div>
-<div class="thumb" onclick="changeImage('✨')">✨</div>
-<div class="thumb" onclick="changeImage('⚡')">⚡</div>
-<div class="thumb" onclick="changeImage('🎁')">🎁</div>
-
-</div>
-
-</div>
-
-<div class="info">
-
-<h1>
-Producto Viral Premium Que Todos Están Comprando
-</h1>
-
-<div class="rating">
-<div class="stars">★★★★★</div>
-<div><strong>4.9</strong> • +2,847 clientes satisfechos</div>
-</div>
-
-<div class="price-box">
-<div class="price">$89.900</div>
-<div class="old-price">$169.900</div>
-<div class="discount">AHORRA 47%</div>
-</div>
-
-<div class="stock">
-⚠️ Últimas 7 unidades disponibles hoy.
-</div>
-
-<div class="benefits">
-
-<div class="benefit">✅ Pago contra entrega disponible</div>
-<div class="benefit">🚚 Envíos rápidos a toda Latinoamérica</div>
-<div class="benefit">🔒 Compra 100% segura SSL</div>
-<div class="benefit">💳 Paga con tarjeta, PSE, Nequi y más</div>
-<div class="benefit">🎁 Garantía incluida</div>
-
-</div>
-
-<h3>Color:</h3>
-
-<div class="colors">
-
-<div class="color" style="background:#000"></div>
-<div class="color" style="background:#c0392b"></div>
-<div class="color" style="background:#2c3e50"></div>
-<div class="color" style="background:#8e44ad"></div>
-
-</div>
-
-<div class="cta">
-
-<button class="buy-btn" onclick="buyNow()">
-⚡ COMPRAR AHORA
+<button class="editor-toggle" onclick="openEditor()">
+⚙️ EDITAR LANDING
 </button>
-
-<button class="cart-btn" onclick="addToCart()">
-🛒 AGREGAR AL CARRITO
+<div class="editor-panel" id="editorPanel">
+<h2>Editar Landing</h2>
+<label>Nombre tienda</label>
+<input type="text" id="editStoreName">
+<label>Nombre producto</label>
+<input type="text" id="editProductTitle">
+<label>Precio</label>
+<input type="text" id="editPrice">
+<label>Precio anterior</label>
+<input type="text" id="editOldPrice">
+<label>Texto descuento</label>
+<input type="text" id="editDiscount">
+<label>Descripción</label>
+<textarea id="editDescription"></textarea>
+<label>Imagen principal URL</label>
+<input type="text" id="editMainImage">
+<button class="save-btn" onclick="saveLandingChanges()">
+GUARDAR CAMBIOS
 </button>
-
-</div>
-
-<div class="payment">
-
-<h4>MÉTODOS DE PAGO</h4>
-
-<div class="payments">
-
-<div class="pay">VISA</div>
-<div class="pay">MASTERCARD</div>
-<div class="pay">PSE</div>
-<div class="pay">NEQUI</div>
-<div class="pay">DAVIPLATA</div>
-<div class="pay">PAYPAL</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="description">
-
-<h2>
-¿Por qué este producto se volvió viral?
-</h2>
-
-<p>
-Miles de personas en Latinoamérica ya están utilizando este producto todos los días gracias a su calidad premium, diseño moderno y resultados increíbles desde el primer uso.
-</p>
-
-<p>
-Diseñado para ofrecer máxima comodidad, durabilidad y una experiencia premium que normalmente solo encuentras en marcas mucho más costosas.
-</p>
-
-<p>
-Si estás buscando un producto que realmente valga la pena y genere satisfacción inmediata, esta es una de las mejores decisiones que puedes tomar hoy.
-</p>
-
-<div class="features">
-
-<div class="feature">
-<div class="feature-icon">🚚</div>
-<h3>Envío Rápido</h3>
-<p>Recibe tu pedido rápido y seguro.</p>
-</div>
-
-<div class="feature">
-<div class="feature-icon">🔒</div>
-<h3>Pago Seguro</h3>
-<p>Protección total en cada compra.</p>
-</div>
-
-<div class="feature">
-<div class="feature-icon">⭐</div>
-<h3>Calidad Premium</h3>
-<p>Producto viral con excelentes reseñas.</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="reviews">
-
-<h2>
-Lo que dicen nuestros clientes
-</h2>
-
-<div class="review-grid">
-
-<div class="review">
-
-<div class="review-top">
-<div class="review-name">María Gómez</div>
-<div>★★★★★</div>
-</div>
-
-<div class="review-text">
-La calidad superó totalmente mis expectativas. El envío llegó rápido y el producto se siente premium desde que lo abres.
-</div>
-
-</div>
-
-<div class="review">
-
-<div class="review-top">
-<div class="review-name">Carlos Ramírez</div>
-<div>★★★★★</div>
-</div>
-
-<div class="review-text">
-Muy recomendado. Ya había probado otros similares pero este realmente sí vale la pena.
-</div>
-
-</div>
-
-<div class="review">
-
-<div class="review-top">
-<div class="review-name">Andrea López</div>
-<div>★★★★★</div>
-</div>
-
-<div class="review-text">
-Excelente compra. Volvería a pedir sin dudarlo. Se nota que es un producto de buena calidad.
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<footer>
-
-<h2 style="margin-bottom:20px;">NEXORA</h2>
-
-<p>
-Tienda online premium especializada en productos virales y tendencia.
-</p>
-
-</footer>
-
-<div class="sticky-buy">
-<button onclick="buyNow()">
-⚡ COMPRAR AHORA
+<button class="close-btn" onclick="closeEditor()">
+CERRAR
 </button>
 </div>
-
 <script>
-
-function changeImage(icon){
-document.getElementById('mainImage').innerHTML = `
-<div class="badge">🔥 MÁS VENDIDO</div>
-${icon}
-`;
+function openEditor(){
+document.getElementById("editorPanel").classList.add("active");
 }
-
-function addToCart(){
-alert("🛒 Producto agregado al carrito");
+function closeEditor(){
+document.getElementById("editorPanel").classList.remove("active");
 }
-
-function buyNow(){
-alert("⚡ Redirigiendo al checkout seguro...");
+function saveLandingChanges(){
+const store =
+document.getElementById("editStoreName").value;
+const title =
+document.getElementById("editProductTitle").value;
+const price =
+document.getElementById("editPrice").value;
+const oldPrice =
+document.getElementById("editOldPrice").value;
+const discount =
+document.getElementById("editDiscount").value;
+const desc =
+document.getElementById("editDescription").value;
+const image =
+document.getElementById("editMainImage").value;
+if(store){
+const storeName =
+document.getElementById("storeName");
+if(storeName){
+storeName.innerText = store;
 }
-
+}
+if(title){
+const productTitle =
+document.getElementById("productTitle");
+if(productTitle){
+productTitle.innerText = title;
+}
+document.title = title;
+}
+if(price){
+const productPrice =
+document.getElementById("productPrice");
+if(productPrice){
+productPrice.innerText = price;
+}
+}
+if(oldPrice){
+const oldPriceElement =
+document.getElementById("oldPrice");
+if(oldPriceElement){
+oldPriceElement.innerText = oldPrice;
+}
+}
+if(discount){
+const discountElement =
+document.getElementById("discountText");
+if(discountElement){
+discountElement.innerText = discount;
+}
+}
+if(desc){
+const descElement =
+document.getElementById("descText");
+if(descElement){
+descElement.innerText = desc;
+}
+}
+if(image){
+const mainImage =
+document.getElementById("mainProductImage");
+if(mainImage){
+mainImage.src = image;
+}
+}
+alert("✅ Landing actualizada correctamente");
+}
 </script>
 
-</body>
-</html>
+:
