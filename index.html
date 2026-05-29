@@ -1,0 +1,980 @@
+cat > /mnt/user-data/outputs/pagina-producto-universal.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Nombre del Producto — Tu Tienda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f6f2;
+  --bg2: #f0ede7;
+  --ink: #141210;
+  --ink2: #3a3632;
+  --muted: #8a8480;
+  --accent: #c4472a;
+  --accent2: #e8d5b0;
+  --accent3: #2a5c45;
+  --white: #ffffff;
+  --border: rgba(20,18,16,0.1);
+  --shadow: 0 2px 40px rgba(20,18,16,0.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Outfit',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* ── GRAIN ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.6;
+}
+
+/* ── ANNOUNCEMENT BAR ── */
+.announce{
+  background:var(--ink);
+  color:var(--bg);
+  text-align:center;
+  padding:.6rem 1rem;
+  font-size:.72rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.announce span{color:var(--accent2);}
+
+/* ── NAV ── */
+nav{
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+  padding:1.2rem 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:200;
+  backdrop-filter:blur(10px);
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:700;
+  letter-spacing:.06em;
+  color:var(--ink);
+  text-decoration:none;
+  cursor:pointer;
+}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;font-weight:500;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--ink);}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-cart{
+  background:var(--ink);color:var(--bg);
+  border:none;padding:.6rem 1.4rem;
+  font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+  font-family:'Outfit',sans-serif;font-weight:600;
+  cursor:pointer;transition:background .2s;
+}
+.nav-cart:hover{background:var(--accent);}
+.cart-count{
+  background:var(--accent);color:#fff;
+  width:18px;height:18px;border-radius:50%;
+  font-size:.6rem;display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;margin-left:.3rem;
+}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{
+  padding:.8rem 5%;
+  display:flex;gap:.5rem;align-items:center;
+  font-size:.72rem;color:var(--muted);letter-spacing:.08em;
+}
+.breadcrumb a{color:var(--muted);text-decoration:none;}
+.breadcrumb a:hover{color:var(--ink);}
+.breadcrumb span{color:var(--border);}
+
+/* ── PRODUCT MAIN ── */
+.product-wrap{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  min-height:80vh;
+  max-width:1400px;
+  margin:0 auto;
+}
+
+/* ── GALLERY ── */
+.gallery-col{
+  position:sticky;top:72px;
+  height:calc(100vh - 72px);
+  display:grid;
+  grid-template-rows:1fr auto;
+  gap:0;
+  overflow:hidden;
+  background:var(--bg2);
+}
+.main-img{
+  position:relative;overflow:hidden;
+  cursor:zoom-in;
+  background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+}
+.main-img-inner{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .5s cubic-bezier(.25,.46,.45,.94);
+}
+.main-img:hover .main-img-inner{transform:scale(1.04);}
+.product-img-placeholder{
+  width:62%;
+  aspect-ratio:1;
+  background:linear-gradient(135deg,#e8e3db 0%,#d4cec4 100%);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:1rem;
+  position:relative;
+  overflow:hidden;
+}
+.product-img-placeholder::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.3) 60%,transparent 80%);
+  animation:shimmer 3s infinite;
+}
+@keyframes shimmer{
+  0%{transform:translateX(-100%);}
+  100%{transform:translateX(200%);}
+}
+.img-icon{font-size:5rem;opacity:.25;}
+.img-note{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-align:center;}
+.badge-img{
+  position:absolute;top:1.5rem;left:1.5rem;
+  background:var(--accent);color:#fff;
+  padding:.35rem .9rem;font-size:.65rem;
+  letter-spacing:.15em;text-transform:uppercase;font-weight:600;
+}
+.thumbnails{
+  display:flex;gap:0;
+  border-top:1px solid var(--border);
+  background:var(--bg2);
+  overflow-x:auto;
+}
+.thumb{
+  flex:1;min-width:80px;height:80px;
+  border-right:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;cursor:pointer;
+  background:var(--bg2);
+  transition:background .2s;
+  opacity:.45;
+}
+.thumb.active,.thumb:hover{background:var(--white);opacity:1;}
+.thumb:last-child{border-right:none;}
+
+/* ── INFO COL ── */
+.info-col{
+  padding:4rem 5% 4rem 4%;
+  display:flex;flex-direction:column;gap:2rem;
+  max-width:580px;
+}
+
+/* brand */
+.product-brand{
+  font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+}
+
+/* title */
+.product-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:600;line-height:1.15;
+  color:var(--ink);
+}
+
+/* rating */
+.rating-row{
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+}
+.stars{color:#c4892a;font-size:1rem;letter-spacing:.05em;}
+.rating-num{font-size:.82rem;font-weight:600;color:var(--ink);}
+.rating-count{font-size:.78rem;color:var(--muted);}
+.verified-badge{
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent3);font-weight:600;
+  background:rgba(42,92,69,.08);
+  padding:.2rem .6rem;
+}
+
+/* price */
+.price-block{
+  display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  padding:1.5rem 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.price-main{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem;font-weight:700;
+  color:var(--ink);
+}
+.price-old{
+  font-size:1.1rem;color:var(--muted);
+  text-decoration:line-through;
+}
+.price-save{
+  background:var(--accent);color:#fff;
+  padding:.2rem .7rem;font-size:.68rem;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+.price-note{
+  font-size:.72rem;color:var(--muted);width:100%;
+  margin-top:-.5rem;
+}
+
+/* variants */
+.variant-group{margin-bottom:.5rem;}
+.variant-label{
+  font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-bottom:.8rem;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.variant-label span{color:var(--ink);font-weight:700;}
+.variant-options{display:flex;flex-wrap:wrap;gap:.6rem;}
+.var-btn{
+  padding:.55rem 1.2rem;
+  border:1px solid var(--border);
+  background:transparent;
+  font-family:'Outfit',sans-serif;
+  font-size:.8rem;font-weight:500;
+  color:var(--ink2);
+  cursor:pointer;transition:all .2s;
+  position:relative;
+}
+.var-btn:hover{border-color:var(--ink);background:var(--ink);color:var(--bg);}
+.var-btn.selected{border-color:var(--ink);background:var(--ink);color:var(--bg);}
+.var-btn.out{opacity:.35;cursor:not-allowed;}
+.var-btn.out::after{
+  content:'';position:absolute;
+  top:50%;left:0;right:0;
+  height:1px;background:var(--muted);
+  transform:rotate(-12deg);
+}
+.color-swatch{
+  width:36px;height:36px;border-radius:50%;
+  border:2px solid transparent;cursor:pointer;
+  transition:all .2s;box-shadow:0 0 0 1px var(--border);
+}
+.color-swatch:hover,.color-swatch.selected{
+  box-shadow:0 0 0 2px var(--ink);
+  transform:scale(1.1);
+}
+
+/* quantity */
+.qty-row{display:flex;align-items:center;gap:1rem;}
+.qty-label{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.qty-ctrl{
+  display:flex;align-items:center;
+  border:1px solid var(--border);
+}
+.qty-btn{
+  width:42px;height:42px;background:none;border:none;
+  font-size:1.2rem;cursor:pointer;color:var(--ink);
+  transition:background .15s;font-family:'Outfit',sans-serif;
+}
+.qty-btn:hover{background:var(--bg2);}
+.qty-num{
+  width:50px;text-align:center;
+  font-size:.9rem;font-weight:600;
+  border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);
+  background:none;color:var(--ink);
+  font-family:'Outfit',sans-serif;
+}
+
+/* CTA */
+.cta-stack{display:flex;flex-direction:column;gap:.8rem;}
+.btn-add{
+  background:var(--ink);color:var(--bg);
+  border:none;padding:1.1rem 2rem;
+  font-family:'Outfit',sans-serif;
+  font-size:.82rem;font-weight:700;
+  letter-spacing:.15em;text-transform:uppercase;
+  cursor:pointer;transition:all .3s;
+  display:flex;align-items:center;justify-content:center;gap:.8rem;
+  position:relative;overflow:hidden;
+}
+.btn-add::before{
+  content:'';position:absolute;inset:0;
+  background:var(--accent);
+  transform:translateX(-100%);
+  transition:transform .4s ease;
+}
+.btn-add:hover::before{transform:translateX(0);}
+.btn-add span{position:relative;z-index:1;}
+.btn-buy{
+  background:transparent;color:var(--ink);
+  border:1.5px solid var(--ink);padding:1.1rem 2rem;
+  font-family:'Outfit',sans-serif;
+  font-size:.82rem;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;
+  cursor:pointer;transition:all .3s;
+}
+.btn-buy:hover{background:var(--ink);color:var(--bg);}
+.btn-wishlist{
+  background:transparent;color:var(--muted);border:none;
+  font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.5rem;transition:color .2s;
+  font-family:'Outfit',sans-serif;
+}
+.btn-wishlist:hover{color:var(--accent);}
+
+/* stock signal */
+.stock-signal{
+  display:flex;align-items:center;gap:.7rem;
+  font-size:.78rem;font-weight:500;
+}
+.stock-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent3);
+  box-shadow:0 0 0 3px rgba(42,92,69,.15);
+  animation:pulse2 2s infinite;
+}
+@keyframes pulse2{0%,100%{box-shadow:0 0 0 3px rgba(42,92,69,.15);}50%{box-shadow:0 0 0 6px rgba(42,92,69,.05);}}
+.stock-dot.low{background:#e8a020;box-shadow:0 0 0 3px rgba(232,160,32,.15);}
+.stock-dot.low{animation:pulseLow 1.5s infinite;}
+@keyframes pulseLow{0%,100%{box-shadow:0 0 0 3px rgba(232,160,32,.15);}50%{box-shadow:0 0 0 6px rgba(232,160,32,.05);}}
+
+/* trust pills */
+.trust-row{
+  display:flex;flex-wrap:wrap;gap:.6rem;
+  padding-top:1rem;border-top:1px solid var(--border);
+}
+.trust-pill{
+  display:flex;align-items:center;gap:.45rem;
+  background:var(--white);
+  border:1px solid var(--border);
+  padding:.45rem .9rem;
+  font-size:.7rem;font-weight:500;
+  color:var(--ink2);
+}
+.trust-pill em{font-style:normal;font-size:.85rem;}
+
+/* social proof */
+.social-proof{
+  background:var(--white);
+  border:1px solid var(--border);
+  padding:1rem 1.2rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.sp-avatars{display:flex;}
+.sp-av{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid var(--bg);
+  background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;
+  margin-left:-8px;
+}
+.sp-av:first-child{margin-left:0;}
+.sp-text{font-size:.75rem;color:var(--ink2);line-height:1.4;}
+.sp-text strong{color:var(--ink);font-weight:700;}
+
+/* payment icons */
+.payment-row{
+  display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;
+}
+.pay-label{font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:100%;margin-bottom:.2rem;}
+.pay-badge{
+  background:var(--white);border:1px solid var(--border);
+  padding:.3rem .7rem;font-size:.65rem;font-weight:700;
+  letter-spacing:.05em;color:var(--ink2);
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* ── DESCRIPTION ── */
+.desc-section{
+  background:var(--white);
+  max-width:1400px;margin:0 auto;
+  border-top:1px solid var(--border);
+}
+.desc-tabs{
+  display:flex;border-bottom:1px solid var(--border);
+  padding:0 5%;
+}
+.desc-tab{
+  padding:1.4rem 0;margin-right:3rem;
+  font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;
+  font-weight:600;color:var(--muted);
+  background:none;border:none;border-bottom:2px solid transparent;
+  cursor:pointer;transition:all .2s;
+  font-family:'Outfit',sans-serif;
+}
+.desc-tab.active,.desc-tab:hover{color:var(--ink);border-bottom-color:var(--accent);}
+
+.desc-panel{display:none;padding:3rem 5%;}
+.desc-panel.active{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;}
+.desc-text{font-size:.95rem;line-height:1.9;color:var(--ink2);}
+.desc-text h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:600;
+  margin-bottom:1.2rem;color:var(--ink);
+}
+.desc-text p{margin-bottom:1.2rem;}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:.8rem;}
+.feature-list li{
+  display:flex;align-items:flex-start;gap:.8rem;
+  font-size:.88rem;color:var(--ink2);line-height:1.6;
+}
+.feature-list li::before{
+  content:'✦';color:var(--accent);font-size:.65rem;
+  margin-top:.3rem;flex-shrink:0;
+}
+.specs-panel{display:none;padding:3rem 5%;}
+.specs-panel.active{display:block;}
+.specs-table{width:100%;border-collapse:collapse;max-width:700px;}
+.specs-table tr{border-bottom:1px solid var(--border);}
+.specs-table td{
+  padding:1rem .5rem;
+  font-size:.85rem;
+}
+.specs-table td:first-child{
+  font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;width:200px;
+}
+
+/* ── REVIEWS ── */
+.reviews-panel{display:none;padding:3rem 5%;}
+.reviews-panel.active{display:block;}
+.reviews-summary{
+  display:grid;grid-template-columns:auto 1fr;gap:3rem;
+  margin-bottom:3rem;align-items:center;
+  max-width:700px;
+}
+.big-rating{text-align:center;}
+.big-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:5rem;font-weight:700;line-height:1;
+  color:var(--ink);
+}
+.big-stars{font-size:1.1rem;color:#c4892a;margin:.4rem 0;}
+.big-label{font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.rating-bars{display:flex;flex-direction:column;gap:.6rem;}
+.rbar-row{display:flex;align-items:center;gap:.8rem;font-size:.78rem;}
+.rbar-label{width:50px;color:var(--muted);}
+.rbar-track{flex:1;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;}
+.rbar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 1s ease;}
+.rbar-count{width:30px;color:var(--muted);text-align:right;}
+.review-card{
+  border-bottom:1px solid var(--border);
+  padding:1.8rem 0;max-width:700px;
+}
+.review-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.8rem;}
+.reviewer-name{font-weight:700;font-size:.9rem;}
+.review-stars{color:#c4892a;font-size:.85rem;}
+.review-date{font-size:.72rem;color:var(--muted);}
+.review-text{font-size:.88rem;color:var(--ink2);line-height:1.7;}
+.verified-tag{
+  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent3);font-weight:600;margin-top:.5rem;display:block;
+}
+.review-images{display:flex;gap:.5rem;margin-top:.8rem;}
+.review-img-placeholder{
+  width:60px;height:60px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;opacity:.5;
+}
+
+/* ── RELATED ── */
+.related-section{
+  padding:5rem 5%;
+  background:var(--bg);
+  max-width:1400px;margin:0 auto;
+}
+.section-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:2.5rem;
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;font-weight:600;
+  color:var(--ink);
+}
+.section-link{
+  font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;
+  text-decoration:none;border-bottom:1px solid var(--border);
+  transition:color .2s,border-color .2s;
+}
+.section-link:hover{color:var(--ink);border-color:var(--ink);}
+.related-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+}
+.related-card{cursor:pointer;}
+.related-img{
+  aspect-ratio:4/5;
+  background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+  margin-bottom:1rem;overflow:hidden;
+  position:relative;
+  transition:all .3s;
+}
+.related-card:hover .related-img{background:var(--white);}
+.related-brand{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:.3rem;}
+.related-name{font-size:.9rem;font-weight:500;color:var(--ink);margin-bottom:.5rem;}
+.related-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;}
+.related-price-old{font-size:.8rem;color:var(--muted);text-decoration:line-through;margin-left:.4rem;}
+
+/* ── STICKY MOBILE CTA ── */
+.sticky-cta{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--white);
+  border-top:1px solid var(--border);
+  padding:1rem 1.2rem;
+  z-index:300;
+  gap:.8rem;
+  align-items:center;
+  box-shadow:0 -4px 20px rgba(0,0,0,.08);
+}
+.sticky-price{
+  flex:1;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:700;
+}
+.sticky-btn{
+  background:var(--ink);color:var(--bg);
+  border:none;padding:.9rem 2rem;
+  font-family:'Outfit',sans-serif;
+  font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  cursor:pointer;flex:2;
+  transition:background .2s;
+}
+.sticky-btn:hover{background:var(--accent);}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;
+  background:var(--ink);color:var(--bg);
+  padding:1rem 1.8rem;
+  font-size:.82rem;letter-spacing:.05em;
+  z-index:5000;
+  transform:translateY(100px);opacity:0;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);
+  display:flex;align-items:center;gap:.8rem;
+  box-shadow:0 8px 30px rgba(0,0,0,.2);
+}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast-icon{font-size:1.1rem;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .product-wrap{grid-template-columns:1fr;}
+  .gallery-col{position:relative;height:70vw;max-height:500px;}
+  .info-col{padding:2rem 5%;max-width:100%;}
+  .related-grid{grid-template-columns:repeat(2,1fr);}
+  .desc-panel.active{grid-template-columns:1fr;}
+  .sticky-cta{display:flex;}
+  nav .nav-links{display:none;}
+  body{padding-bottom:80px;}
+}
+@media(max-width:600px){
+  .related-grid{grid-template-columns:repeat(2,1fr);gap:1rem;}
+  .reviews-summary{grid-template-columns:1fr;gap:1.5rem;}
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.info-col > *{
+  animation:fadeUp .5s ease both;
+}
+.info-col > *:nth-child(1){animation-delay:.05s;}
+.info-col > *:nth-child(2){animation-delay:.1s;}
+.info-col > *:nth-child(3){animation-delay:.15s;}
+.info-col > *:nth-child(4){animation-delay:.2s;}
+.info-col > *:nth-child(5){animation-delay:.25s;}
+.info-col > *:nth-child(6){animation-delay:.3s;}
+.info-col > *:nth-child(7){animation-delay:.35s;}
+.info-col > *:nth-child(8){animation-delay:.4s;}
+.info-col > *:nth-child(9){animation-delay:.45s;}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT -->
+<div class="announce">🌍 Envío mundial disponible &nbsp;·&nbsp; <span>Compra segura garantizada</span> &nbsp;·&nbsp; Devolución 30 días sin preguntas</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="editField('storeName')" title="Haz clic para cambiar nombre">Tu Tienda</a>
+  <ul class="nav-links">
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#">Colecciones</a></li>
+    <li><a href="#">Ofertas</a></li>
+    <li><a href="#">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-cart" onclick="showToast('🛒 Ver carrito')">
+      Carrito <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Inicio</a><span>/</span>
+  <a href="#" id="bcCategory">Categoría</a><span>/</span>
+  <span id="bcProduct">Nombre del Producto</span>
+</div>
+
+<!-- PRODUCT SECTION -->
+<div class="product-wrap">
+
+  <!-- GALLERY -->
+  <div class="gallery-col">
+    <div class="main-img">
+      <div class="main-img-inner">
+        <div class="product-img-placeholder">
+          <div class="badge-img" id="badgeImg">NUEVO</div>
+          <div class="img-icon" id="mainEmoji">📦</div>
+          <div class="img-note">Sube la foto de tu producto<br>aquí en Shopify</div>
+        </div>
+      </div>
+    </div>
+    <div class="thumbnails">
+      <div class="thumb active" onclick="selectThumb(this,'📦')">📦</div>
+      <div class="thumb" onclick="selectThumb(this,'🔍')">🔍</div>
+      <div class="thumb" onclick="selectThumb(this,'⚡')">⚡</div>
+      <div class="thumb" onclick="selectThumb(this,'✨')">✨</div>
+      <div class="thumb" onclick="selectThumb(this,'🎁')">🎁</div>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="info-col">
+    <div class="product-brand" id="productBrand">Tu Marca</div>
+
+    <h1 class="product-title" id="productTitle">
+      Nombre del Producto Premium
+    </h1>
+
+    <div class="rating-row">
+      <div class="stars" id="starsDisplay">★★★★★</div>
+      <div class="rating-num" id="ratingNum">4.9</div>
+      <div class="rating-count" id="ratingCount">(2,847 reseñas)</div>
+      <div class="verified-badge">✓ Verificadas</div>
+    </div>
+
+    <div class="price-block">
+      <div class="price-main" id="priceMain">$89.000</div>
+      <div class="price-old" id="priceOld">$150.000</div>
+      <div class="price-save" id="priceSave">Ahorras 41%</div>
+      <div class="price-note">Impuestos incluidos · Envío calculado al pagar</div>
+    </div>
+
+    <!-- VARIANTS: Color -->
+    <div class="variant-group">
+      <div class="variant-label">Color: <span id="selectedColor">Negro</span></div>
+      <div class="variant-options">
+        <div class="color-swatch selected" style="background:#1a1a1a;" title="Negro" onclick="selectColor(this,'Negro')"></div>
+        <div class="color-swatch" style="background:#f5f5f0;" title="Blanco" onclick="selectColor(this,'Blanco')"></div>
+        <div class="color-swatch" style="background:#8b4513;" title="Café" onclick="selectColor(this,'Café')"></div>
+        <div class="color-swatch" style="background:#c4472a;" title="Rojo" onclick="selectColor(this,'Rojo')"></div>
+        <div class="color-swatch" style="background:#2a5c45;" title="Verde" onclick="selectColor(this,'Verde')"></div>
+        <div class="color-swatch" style="background:#c4892a;" title="Dorado" onclick="selectColor(this,'Dorado')"></div>
+      </div>
+    </div>
+
+    <!-- VARIANTS: Size -->
+    <div class="variant-group">
+      <div class="variant-label">Talla / Tamaño: <span id="selectedSize">M</span>
+        <a href="#" style="font-size:.65rem;color:var(--accent);text-decoration:none;font-weight:500;">Guía de tallas →</a>
+      </div>
+      <div class="variant-options" id="sizeOptions">
+        <button class="var-btn out" onclick="">XS</button>
+        <button class="var-btn" onclick="selectSize(this)">S</button>
+        <button class="var-btn selected" onclick="selectSize(this)">M</button>
+        <button class="var-btn" onclick="selectSize(this)">L</button>
+        <button class="var-btn" onclick="selectSize(this)">XL</button>
+        <button class="var-btn" onclick="selectSize(this)">XXL</button>
+      </div>
+    </div>
+
+    <!-- STOCK -->
+    <div class="stock-signal">
+      <div class="stock-dot low"></div>
+      <span id="stockText">¡Solo quedan <strong>7 unidades</strong>! Pide ya antes de que se agote.</span>
+    </div>
+
+    <!-- QUANTITY -->
+    <div class="qty-row">
+      <div class="qty-label">Cantidad:</div>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <input class="qty-num" type="number" id="qtyInput" value="1" min="1" max="99">
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+
+    <!-- CTA BUTTONS -->
+    <div class="cta-stack">
+      <button class="btn-add" onclick="addToCart()">
+        <span>🛒 Agregar al carrito</span>
+      </button>
+      <button class="btn-buy" onclick="showToast('💳 Redirigiendo al pago seguro...')">
+        ⚡ Comprar ahora — Pago seguro
+      </button>
+      <button class="btn-wishlist" onclick="showToast('❤️ Guardado en tu lista de deseos')">
+        ♡ Guardar en lista de deseos
+      </button>
+    </div>
+
+    <!-- SOCIAL PROOF -->
+    <div class="social-proof">
+      <div class="sp-avatars">
+        <div class="sp-av">👤</div>
+        <div class="sp-av">👤</div>
+        <div class="sp-av">👤</div>
+        <div class="sp-av">👤</div>
+      </div>
+      <div class="sp-text"><strong>234 personas</strong> vieron este producto hoy.<br>15 lo compraron en las últimas 24 horas.</div>
+    </div>
+
+    <!-- TRUST PILLS -->
+    <div class="trust-row">
+      <div class="trust-pill"><em>🚚</em> Envío rápido</div>
+      <div class="trust-pill"><em>🔒</em> Pago seguro SSL</div>
+      <div class="trust-pill"><em>↩️</em> Devolución 30 días</div>
+      <div class="trust-pill"><em>✅</em> Garantía incluida</div>
+      <div class="trust-pill"><em>🌍</em> Envío mundial</div>
+    </div>
+
+    <!-- PAYMENT METHODS -->
+    <div class="payment-row">
+      <div class="pay-label">Métodos de pago aceptados:</div>
+      <div class="pay-badge">VISA</div>
+      <div class="pay-badge">MASTERCARD</div>
+      <div class="pay-badge">AMEX</div>
+      <div class="pay-badge">PAYPAL</div>
+      <div class="pay-badge">PSE</div>
+      <div class="pay-badge">NEQUI</div>
+      <div class="pay-badge">EFECTY</div>
+    </div>
+  </div>
+</div>
+
+<!-- DESCRIPTION TABS -->
+<div class="desc-section">
+  <div class="desc-tabs">
+    <button class="desc-tab active" onclick="showTab('desc')">Descripción</button>
+    <button class="desc-tab" onclick="showTab('specs')">Especificaciones</button>
+    <button class="desc-tab" onclick="showTab('reviews')">Reseñas (2,847)</button>
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="desc-panel active" id="tab-desc">
+    <div class="desc-text">
+      <h3 id="descTitle">Diseñado para quienes no aceptan lo ordinario.</h3>
+      <p id="descP1">Presentamos el producto que está cambiando la industria. Desarrollado con materiales de primera calidad y un proceso de fabricación que supera los estándares internacionales, este producto es la definición de excelencia accesible.</p>
+      <p id="descP2">Cada detalle ha sido pensado para ofrecerte la mejor experiencia posible. Desde el primer uso notarás la diferencia: acabados premium, funcionalidad superior y una durabilidad que garantiza años de uso perfecto.</p>
+      <p id="descP3">Miles de clientes satisfechos en todo el mundo ya lo confirman: esto no es un producto más. Es una inversión en calidad de vida.</p>
+    </div>
+    <ul class="feature-list" id="featureList">
+      <li>Material premium de calidad internacional certificada</li>
+      <li>Diseño ergonómico adaptado a uso diario intensivo</li>
+      <li>Disponible en 6 colores exclusivos para esta temporada</li>
+      <li>Compatible con todas las tallas y tipos de uso</li>
+      <li>Empaque premium — perfecto como regalo</li>
+      <li>Garantía oficial de fabricante incluida</li>
+      <li>Envío asegurado con seguimiento en tiempo real</li>
+    </ul>
+  </div>
+
+  <!-- SPECS -->
+  <div class="specs-panel" id="tab-specs">
+    <table class="specs-table" id="specsTable">
+      <tr><td>Material</td><td id="spec1">Material premium — Editar en Shopify</td></tr>
+      <tr><td>Dimensiones</td><td id="spec2">Estándar — Editar en Shopify</td></tr>
+      <tr><td>Peso</td><td id="spec3">Ligero — Editar en Shopify</td></tr>
+      <tr><td>Colores</td><td id="spec4">6 opciones disponibles</td></tr>
+      <tr><td>Tallas</td><td id="spec5">S / M / L / XL / XXL</td></tr>
+      <tr><td>Origen</td><td id="spec6">Importado — Alta calidad</td></tr>
+      <tr><td>Garantía</td><td id="spec7">12 meses oficial</td></tr>
+      <tr><td>Empaque</td><td id="spec8">Caja premium incluida</td></tr>
+    </table>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="reviews-panel" id="tab-reviews">
+    <div class="reviews-summary">
+      <div class="big-rating">
+        <div class="big-num">4.9</div>
+        <div class="big-stars">★★★★★</div>
+        <div class="big-label">de 2,847 reseñas</div>
+      </div>
+      <div class="rating-bars">
+        <div class="rbar-row"><div class="rbar-label">5 ★</div><div class="rbar-track"><div class="rbar-fill" style="width:88%"></div></div><div class="rbar-count">88%</div></div>
+        <div class="rbar-row"><div class="rbar-label">4 ★</div><div class="rbar-track"><div class="rbar-fill" style="width:8%"></div></div><div class="rbar-count">8%</div></div>
+        <div class="rbar-row"><div class="rbar-label">3 ★</div><div class="rbar-track"><div class="rbar-fill" style="width:3%"></div></div><div class="rbar-count">3%</div></div>
+        <div class="rbar-row"><div class="rbar-label">2 ★</div><div class="rbar-track"><div class="rbar-fill" style="width:1%"></div></div><div class="rbar-count">1%</div></div>
+        <div class="rbar-row"><div class="rbar-label">1 ★</div><div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div><div class="rbar-count">0%</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-header">
+        <div><div class="reviewer-name">María García</div><div class="review-stars">★★★★★</div></div>
+        <div class="review-date">Hace 2 días</div>
+      </div>
+      <div class="review-text">¡Increíble producto! Superó todas mis expectativas. La calidad es notablemente superior a lo que esperaba por este precio. El envío llegó en 2 días perfectamente empacado. Sin duda lo recomendaré.</div>
+      <span class="verified-tag">✓ Compra verificada</span>
+      <div class="review-images">
+        <div class="review-img-placeholder">📷</div>
+        <div class="review-img-placeholder">📷</div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-header">
+        <div><div class="reviewer-name">Carlos Mendoza</div><div class="review-stars">★★★★★</div></div>
+        <div class="review-date">Hace 5 días</div>
+      </div>
+      <div class="review-text">Lo compré con cierta duda pero quedé completamente satisfecho. El diseño es premium y la funcionalidad supera a marcas mucho más caras. El servicio al cliente fue excelente. ¡100% recomendado!</div>
+      <span class="verified-tag">✓ Compra verificada</span>
+    </div>
+    <div class="review-card">
+      <div class="review-header">
+        <div><div class="reviewer-name">Ana Rodríguez</div><div class="review-stars">★★★★★</div></div>
+        <div class="review-date">Hace 1 semana</div>
+      </div>
+      <div class="review-text">Tercer pedido que hago y siempre la misma calidad excepcional. Lo regalo mucho también porque queda perfecto para cualquier ocasión. Definitivamente cliente fiel.</div>
+      <span class="verified-tag">✓ Compra verificada</span>
+    </div>
+  </div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="related-section">
+  <div class="section-header">
+    <div class="section-title">También te puede gustar</div>
+    <a href="#" class="section-link">Ver todo →</a>
+  </div>
+  <div class="related-grid">
+    <div class="related-card" onclick="showToast('Navegando al producto...')">
+      <div class="related-img">💎</div>
+      <div class="related-brand">Tu Marca</div>
+      <div class="related-name">Producto Relacionado 1</div>
+      <div><span class="related-price">$79.000</span><span class="related-price-old">$130.000</span></div>
+    </div>
+    <div class="related-card" onclick="showToast('Navegando al producto...')">
+      <div class="related-img">👑</div>
+      <div class="related-brand">Tu Marca</div>
+      <div class="related-name">Producto Relacionado 2</div>
+      <div><span class="related-price">$109.000</span><span class="related-price-old">$180.000</span></div>
+    </div>
+    <div class="related-card" onclick="showToast('Navegando al producto...')">
+      <div class="related-img">⚡</div>
+      <div class="related-brand">Tu Marca</div>
+      <div class="related-name">Producto Relacionado 3</div>
+      <div><span class="related-price">$59.000</span><span class="related-price-old">$95.000</span></div>
+    </div>
+    <div class="related-card" onclick="showToast('Navegando al producto...')">
+      <div class="related-img">🌟</div>
+      <div class="related-brand">Tu Marca</div>
+      <div class="related-name">Producto Relacionado 4</div>
+      <div><span class="related-price">$139.000</span><span class="related-price-old">$220.000</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta">
+  <div class="sticky-price" id="stickyPrice">$89.000</div>
+  <button class="sticky-btn" onclick="addToCart()">🛒 Agregar al carrito</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span id="toastMsg">Producto agregado al carrito</span>
+</div>
+
+<script>
+// ── CART ──
+let cartCount = 0;
+function addToCart(){
+  cartCount++;
+  document.getElementById('cartCount').textContent = cartCount;
+  showToast('✅ ¡Producto agregado al carrito!');
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ── QUANTITY ──
+function changeQty(d){
+  const inp = document.getElementById('qtyInput');
+  const v = Math.max(1, parseInt(inp.value||1)+d);
+  inp.value = v;
+}
+
+// ── TABS ──
+function showTab(id){
+  document.querySelectorAll('.desc-panel,.specs-panel,.reviews-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.desc-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── GALLERY ──
+function selectThumb(el, emoji){
+  document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('mainEmoji').textContent = emoji;
+}
+
+// ── COLOR ──
+function selectColor(el, name){
+  document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('selectedColor').textContent = name;
+}
+
+// ── SIZE ──
+function selectSize(btn){
+  if(btn.classList.contains('out')) return;
+  document.querySelectorAll('#sizeOptions .var-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('selectedSize').textContent = btn.textContent;
+}
+
+// ── ANIMATE BARS ──
+setTimeout(()=>{
+  document.querySelectorAll('.rbar-fill').forEach(b=>{
+    const w = b.style.width;
+    b.style.width='0';
+    setTimeout(()=>b.style.width=w, 100);
+  });
+}, 500);
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done"
